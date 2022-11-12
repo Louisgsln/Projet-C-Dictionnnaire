@@ -32,7 +32,10 @@ typedef struct s_forms{
 p_node createNode(char);
 int recherche_lettre_children(LISTE, char);
 p_children createChildren(p_node);
-
+LISTE ajouterEnFin(LISTE, p_node);
+void afficherListe(LISTE );
+LISTE ajouter_mot_arbre(LISTE, char*);
+void afficher_enfants(LISTE );
 
 
 #endif //UNTITLED_NODE_H
