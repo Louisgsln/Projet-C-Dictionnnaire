@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -79,34 +78,12 @@ int main(int argc, char *argv[])
     p_node pn;
     t_tree t;
     t.root = createNode('/');
-    L= t.root->children;
-    p_children temp;
-    temp = L;
 
-    int pos2_mot = 0;
-    //while(mots_coupes[1][pos2_mot]!= '\0') {
-        //pn = createNode(mots_coupes[1][pos2_mot]);
-
-        if (L == NULL) {
-            while(mots_coupes[1][pos2_mot]!= '\0') {
-                pn = createNode(mots_coupes[1][pos2_mot]);
-
-                L = createChildren(pn);
-                //printf("%u\n", __LINE__);
-                printf("lettre enregistree dans enfants : %c\n", L->pn->value);
-                pos2_mot++;
-                L=L->next;
-
-
-            }
-
-        }
-        printf("%u\n", __LINE__);
-        printf("%c", L->pn->children->pn->value);
-        printf("%u\n", __LINE__);
-
-        //tant que la lettre existe dans les enfants on prend prohcaine lettre sinon on créer toutes le lettres à la suite
-
+    //ajoute lettre dans liste_children du p_node precedent
+    t.root->children = ajouter_mot_arbre(t.root->children, mots_coupes[1]);
+    printf("\n");
+    //affiche toutes les listes des enfants non nulles 
+    afficher_enfants(t.root->children);
 
 
 
