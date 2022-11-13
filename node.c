@@ -1,6 +1,7 @@
 #include "node.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "bintree.h"
 
 p_node createNode(char val)
 {
@@ -14,7 +15,7 @@ p_node createNode(char val)
     return nouv;
 }
 
-int recherche_lettre_children(LISTE L, char c){
+/*int recherche_lettre_children(LISTE L, char c){
     if (L == NULL){
         return 0;
     }
@@ -23,6 +24,34 @@ int recherche_lettre_children(LISTE L, char c){
             return 1;
         }
         return recherche_lettre_children(L->next, c);
+    }
+}*/
+
+int recherche_lettre(p_children children, char c){
+
+    //printf("- %c", children->pn->value);
+    if (children == NULL){
+        return 0;
+    }
+    if (c == children->pn->value){
+        return 1;
+    }else{
+
+        return recherche_lettre(children->next, c);
+    }
+
+}
+
+p_children recherche_enfant(p_children children, char c){
+
+    //printf("- %c", children->pn->value);
+    if (children == NULL){
+        return NULL;
+    }
+    if (c == children->pn->value){
+        return children;
+    }else{
+        return recherche_enfant(children->next, c);
     }
 }
 
@@ -95,7 +124,39 @@ void afficher_enfants(LISTE L){
         return;
     }
     else {
+        p_children tmp;
+        tmp = L;
+
         afficherListe(L);
-        afficher_enfants(L->pn->children);
+        while (tmp != NULL) {
+            afficher_enfants(tmp->pn->children);
+            tmp = tmp->next;
+        }
+    }
+}
+
+void rentrer_mot_arbre_entier(p_node pn,  char *mot){
+    //printf("%s:%u - mot %s\n", __FILE__,__LINE__, mot);
+    if (recherche_lettre(pn->children, mot[0])){
+        //printf("%s:%u", __FILE__,__LINE__);
+        rentrer_mot_arbre_entier(pn->children->pn, mot+1);
+    }
+    else{
+        pn->children = ajouter_mot_arbre(pn->children, mot);
+    }
+}
+
+int recherche_mot(p_node pn,  char *mot){
+    if (mot[0] == '\0'){
+        return 1;
+    }
+    //printf("%s:%u - mot %s\n", __FILE__,__LINE__, mot);
+    p_children enfant = recherche_enfant(pn->children, mot[0]);
+    if (enfant != NULL){
+        //printf("%s:%u", __FILE__,__LINE__);
+        return recherche_mot(enfant->pn, mot+1);
+    }
+    else{
+        return 0;
     }
 }
