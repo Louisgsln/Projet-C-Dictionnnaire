@@ -1,5 +1,6 @@
 #include "node.h"
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include "bintree.h"
 
@@ -15,17 +16,6 @@ p_node createNode(char val)
     return nouv;
 }
 
-/*int recherche_lettre_children(LISTE L, char c){
-    if (L == NULL){
-        return 0;
-    }
-    else{
-        if (c == L->pn->value){
-            return 1;
-        }
-        return recherche_lettre_children(L->next, c);
-    }
-}*/
 
 int recherche_lettre(p_children children, char c){
 
@@ -35,11 +25,10 @@ int recherche_lettre(p_children children, char c){
     }
     if (c == children->pn->value){
         return 1;
-    }else{
-
+    }
+    else{
         return recherche_lettre(children->next, c);
     }
-
 }
 
 p_children recherche_enfant(p_children children, char c){
@@ -64,7 +53,19 @@ p_children createChildren(p_node pn){
     return nouv;
 }
 
-LISTE ajouterEnFin(LISTE L, p_node pn)
+p_forms createForms(char *infos, char *mot){
+    p_forms nouv;
+    nouv = (p_forms) malloc(sizeof(t_forms));
+    strcpy(nouv -> infos, infos);
+    strcpy(nouv -> value, mot);
+    nouv->next = NULL;
+
+    return nouv;
+}
+
+
+
+LISTE ajouterEnFinChildren(LISTE L, p_node pn)
 {
     LISTE nouvelElement = createChildren(pn);
 
@@ -88,6 +89,25 @@ LISTE ajouterEnFin(LISTE L, p_node pn)
     }
 }
 
+p_forms ajouterEnFinForms(p_forms L, char *infos, char *mot)
+{
+    p_forms nouvelElement = createForms(infos, mot);
+
+    if (L == NULL)
+    {
+        return nouvelElement;
+    }
+    else
+    {
+        p_forms temp= L;
+        while(temp->next != NULL)
+        {
+            temp = temp-> next;
+        }
+        temp->next = nouvelElement;
+        return L;
+    }
+}
 
 void afficherListe(LISTE L)
 {
@@ -102,7 +122,20 @@ void afficherListe(LISTE L)
     }
 }
 
-LISTE ajouter_mot_arbre(LISTE L, char *mot){
+void affichermots_flechis(p_forms F)
+{
+    p_forms tmp = F;
+    /* Tant que l'on n'est pas au bout de la liste */
+    while(tmp != NULL)
+    {
+        /* On affiche */
+        printf("mots flechis : %s\n ", tmp->value);
+        /* On avance d'une case */
+        tmp = tmp->next;
+    }
+}
+
+LISTE ajouter_mot_arbre(LISTE L, char *mot, char *infos, char *mots_flechis){
     //printf("%s:%u - L: 0x%lx\n", __FILE__, __LINE__, L);
     if (mot[0] == '\0'){
         return NULL;
@@ -110,10 +143,13 @@ LISTE ajouter_mot_arbre(LISTE L, char *mot){
     else{
 
         p_node pn = createNode(mot[0]);
-        L = ajouterEnFin(L, pn);
+        L = ajouterEnFinChildren(L, pn);
         //afficherListe(L);
-        pn -> children = ajouter_mot_arbre(pn->children,mot+1);
-
+        pn -> children = ajouter_mot_arbre(pn->children,mot+1, infos, mots_flechis);
+        if (pn -> children == NULL){
+            pn->forms = ajouterEnFinForms(pn->forms, infos, mots_flechis);
+            affichermots_flechis(pn->forms);
+        }
     }
     return L;
 }
@@ -135,14 +171,18 @@ void afficher_enfants(LISTE L){
     }
 }
 
-void rentrer_mot_arbre_entier(p_node pn,  char *mot){
+void rentrer_mot_arbre_entier(p_node pn,  char *mot, char *infos, char *mots_flechis){
     //printf("%s:%u - mot %s\n", __FILE__,__LINE__, mot);
     if (recherche_lettre(pn->children, mot[0])){
         //printf("%s:%u", __FILE__,__LINE__);
-        rentrer_mot_arbre_entier(pn->children->pn, mot+1);
+        rentrer_mot_arbre_entier(pn->children->pn, mot+1, infos, mots_flechis);
     }
     else{
-        pn->children = ajouter_mot_arbre(pn->children, mot);
+        pn->children = ajouter_mot_arbre(pn->children, mot , infos, mots_flechis);
+        if (pn->children == NULL){
+            pn->forms = ajouterEnFinForms(pn->forms, infos, mots_flechis);
+            affichermots_flechis(pn->forms);
+        }
     }
 }
 
