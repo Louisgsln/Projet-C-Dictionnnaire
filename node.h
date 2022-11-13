@@ -36,6 +36,10 @@ LISTE ajouterEnFin(LISTE, p_node);
 void afficherListe(LISTE );
 LISTE ajouter_mot_arbre(LISTE, char*);
 void afficher_enfants(LISTE );
+int recherche_lettre(p_children, char);
+void rentrer_mot_arbre_entier(p_node, char *);
+int recherche_mot(p_node,  char *);
+p_children recherche_enfant(p_children, char);
 
 
 #endif //UNTITLED_NODE_H
