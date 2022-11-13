@@ -57,23 +57,27 @@ int main(int argc, char *argv[])
             int res = trouver_arbre(mots_coupes[2]);
 
             if (res ==1){
-                rentrer_mot_arbre_entier(t_nom.root, mots_coupes[1]);
+                rentrer_mot_arbre_entier(t_nom.root, mots_coupes[1],mots_coupes[2], mots_coupes[0]);
+                printf("mot ajoute dans l'arbre : ");
                 afficher_enfants(t_nom.root->children);
                 printf("\n");
             }
             if (res == 2){
-                rentrer_mot_arbre_entier(t_verbe.root, mots_coupes[1]);
+                rentrer_mot_arbre_entier(t_verbe.root, mots_coupes[1],mots_coupes[2], mots_coupes[0]);
+                printf("mot ajoute dans l'arbre : ");
                 afficher_enfants(t_verbe.root->children);
                 printf("\n");
             }
             if (res == 3){
-                rentrer_mot_arbre_entier(t_adj.root, mots_coupes[1]);
+                rentrer_mot_arbre_entier(t_adj.root, mots_coupes[1],mots_coupes[2], mots_coupes[0]);
+                printf("mot ajoute dans l'arbre : ");
                 afficher_enfants(t_adj.root->children);
                 printf("\n");
             }
             if (res == 4){
-                rentrer_mot_arbre_entier(t_adv.root, mots_coupes[1]);
+                rentrer_mot_arbre_entier(t_adv.root, mots_coupes[1],mots_coupes[2], mots_coupes[0]);
                 afficher_enfants(t_adv.root->children);
+                printf("mot ajoute dans l'arbre : ");
                 printf("\n");
             }
         }
