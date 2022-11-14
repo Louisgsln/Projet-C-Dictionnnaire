@@ -200,3 +200,42 @@ int recherche_mot(p_node pn,  char *mot){
         return 0;
     }
 }
+
+int children_number(LISTE L){
+    LISTE tmp = L;
+    int cpt=0;
+/* Tant que l'on n'est pas au bout de la liste */
+    while(tmp != NULL)
+    {
+        cpt++;
+/* On avance d'une case */
+        tmp = tmp->next;
+    }return cpt;
+}
+
+void random_node_research(p_node root){
+
+    int fate = rand() % children_number(root->children);
+    p_node current = root;
+    p_children child = root->children;
+    for (int i = 0; i < fate - 1; i++)
+        child = child->next;
+    current = child->pn;
+
+    printf("%c", current->value);
+    if (children_number(root->children) > 0) {//has next characters
+        if (root->forms == NULL || d_continue()) //does not have next characters or continue
+            random_node_research(current);
+    }
+}
+
+//évite de choisir toujours le premier mot
+int d_continue(void){
+    int fate_choice;
+    if (rand()% 2 == 0)
+        fate_choice = 0;
+    else
+        fate_choice = 1;
+    return fate_choice;
+}
+
