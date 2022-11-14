@@ -6,8 +6,9 @@
 #include "bintree.h"
 #include "fichier.h"
 
-#define TAILLE_MAX 1000 // Tableau de taille 1000
 
+#define TAILLE_MAX 1000 // Tableau de taille 1000
+//srand(time(NULL));
 void remplis_mots_coupes(char mots_coupes[3][TAILLE_MAX], char *chaine)
 {
     char mot[TAILLE_MAX];
@@ -41,6 +42,27 @@ int main(int argc, char *argv[])
     t_adv.root = createNode('/');
     t_adj.root = createNode('/');
 
+    printf("Bonjour ! \nQuel modèle de phrases souhaitez-vous générer ? ?\n");
+    printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – ‘qui’ – verbe – verbe – nom – adjectif \n");
+    int rep = 0;
+    int i = 0;
+    printf("Saisissez le numéro correspondant : ");
+    scanf("%d",&rep);
+    do{
+        printf("Le numéro saisit ne correspond à aucune des propositions.\n");
+        printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – ‘qui’ – verbe – verbe – nom – adjectif \n3- Modèle n°3 : nom - verbe - nom - adverbe - verbe ");
+        printf("Saisissez le numéro correspondant : ");
+        scanf("%d",&rep);
+    }while(rep!=1 & rep!=2 & rep!=3);
+    if (rep==1){
+        // ajouter fonction pour modèle 1
+    }
+    if (rep==2){
+        // ajouter fonction pour modèle 2
+    }
+    if (rep==3){
+        // ajouter fonction pour modèle 3
+    }
     fichier = fopen("C:\\Users\\ameli\\CLionProjects\\Dictionnaire\\dico_10_lignes.txt", "r");
 
     if (fichier != NULL) {
@@ -103,23 +125,18 @@ int main(int argc, char *argv[])
             pos_mot++;
             pos_chaine++;
         }
-
         mot[pos_mot] = '\0';
         pos_mot = 0;
         strcpy(mots_coupes[numero_mot], mot);
         //printf("'%s'\n", mot);
-
         while(isspace(chaine[pos_chaine])) {
             pos_chaine++;
         }
     }
-
-
     //trouver quel type d'arbre
     int res = trouver_arbre(mots_coupes[2]);
     t_tree t_nom, t_verbe, t_adj, t_adv;
     t_nom.root = t_verbe.root = t_adv.root = t_adj.root = createNode('/');
-
     if (res ==1){
         rentrer_mot_arbre_entier(t_nom.root, mots_coupes[1]);
         afficher_enfants(t_nom.root->children);
@@ -129,21 +146,16 @@ int main(int argc, char *argv[])
         rentrer_mot_arbre_entier(t_verbe.root, mots_coupes[1]);
         afficher_enfants(t_verbe.root->children);
         printf("\n");
-
     }
     if (res == 3){
-
         rentrer_mot_arbre_entier(t_adj.root, mots_coupes[1]);
         afficher_enfants(t_adj.root->children);
         printf("\n");
-
     }
     if (res == 4){
-
         rentrer_mot_arbre_entier(t_adv.root, mots_coupes[1]);
         afficher_enfants(t_adv.root->children);
         printf("\n");
-
     }*/
 
     /*printf("%s\n", mots_coupes[2]);
@@ -159,7 +171,6 @@ int main(int argc, char *argv[])
     }
     type_mot[pos3_mot]='\0';
     printf("%s\n", type_mot);
-
     if(strcmp(type_mot,type_Nom) == 0){
         printf("dans arbre nom\n");
     }
@@ -187,7 +198,6 @@ int main(int argc, char *argv[])
     printf("\n");
     //affiche toutes les listes des enfants non nulles
     afficher_enfants(t.root->children);
-
     if (recherche_lettre(t.root ->children->pn->children->pn->children->pn->children, mots_coupes[1][3])){
         printf("\noui %c existe", mots_coupes[1][3]);
     }
