@@ -5,10 +5,10 @@
 #include "node.h"
 #include "bintree.h"
 #include "fichier.h"
-
+#include <time.h>
 
 #define TAILLE_MAX 1000 // Tableau de taille 1000
-//srand(time(NULL));
+
 void remplis_mots_coupes(char mots_coupes[3][TAILLE_MAX], char *chaine)
 {
     char mot[TAILLE_MAX];
@@ -34,6 +34,7 @@ void remplis_mots_coupes(char mots_coupes[3][TAILLE_MAX], char *chaine)
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
     FILE* fichier = NULL;
     char chaine[TAILLE_MAX] = ""; // Chaîne vide de taille TAILLE_MAX
     t_tree t_nom, t_verbe, t_adj, t_adv;
@@ -42,28 +43,8 @@ int main(int argc, char *argv[])
     t_adv.root = createNode('/');
     t_adj.root = createNode('/');
 
-    printf("Bonjour ! \nQuel modèle de phrases souhaitez-vous générer ? \n");
-    printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – ‘qui’ – verbe – verbe – nom – adjectif \n");
-    int rep = 0;
-    int i = 0;
-    printf("Saisissez le numéro correspondant : ");
-    scanf("%d",&rep);
-    do{
-        printf("Le numéro saisit ne correspond à aucune des propositions.\n");
-        printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – ‘qui’ – verbe – verbe – nom – adjectif \n3- Modèle n°3 : nom - verbe - nom - adverbe - verbe ");
-        printf("Saisissez le numéro correspondant : ");
-        scanf("%d",&rep);
-    }while(rep!=1 & rep!=2 & rep!=3);
-    if (rep==1){
-        // ajouter fonction pour modèle 1
-    }
-    if (rep==2){
-        // ajouter fonction pour modèle 2
-    }
-    if (rep==3){
-        // ajouter fonction pour modèle 3
-    }
-    fichier = fopen("C:\\Users\\ameli\\CLionProjects\\Dictionnaire\\dico_10_lignes.txt", "r");
+
+    fichier = fopen("dico_10_lignes.txt", "r");
 
     if (fichier != NULL) {
         //fgets(chaine, TAILLE_MAX, fichier); // On lit maximum TAILLE_MAX caractères du fichier, on stocke le tout dans "chaine"
@@ -105,9 +86,63 @@ int main(int argc, char *argv[])
         }
         fclose(fichier);
     }
+    //fflush(stdin);
+    printf("\nBonjour ! \n\nQuel modèle de phrases souhaitez-vous générer ? ?\n");
+    printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – ‘qui’ – verbe – verbe – nom – adjectif \n3 - Modèle n°3 : nom - verbe - nom - adverbe - verbe \n");
+    int rep;
+    printf("Saisissez le numéro correspondant : ");
+    //fflush(stdin);
+    scanf("%d",&rep);
+    
+    while(rep!=1 & rep!=2 & rep!=3){
+        printf("Le numéro saisit ne correspond à aucune des propositions.\n");
+        printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – ‘qui’ – verbe – verbe – nom – adjectif \n3 - Modèle n°3 : nom - verbe - nom - adverbe - verbe ");
+        printf("Saisissez le numéro correspondant : ");
+        scanf("%d",&rep);
+    }
+
+    if (rep==1){
+        printf("%d",rep);
+        printf("eeeeeee");
+        // ajouter fonction pour modèle 1
+        random_node_research(t_nom.root);
+        printf(" ");
+        random_node_research(t_adj.root);
+        printf(" ");
+        random_node_research(t_verbe.root);
+        printf(" ");
+        random_node_research(t_nom.root);
+    }
+    printf("zzzzzz");
+    if (rep==2){
+        // ajouter fonction pour modèle 2
+        random_node_research(t_nom.root);
+        printf(" qui  ");
+        random_node_research(t_adj.root);
+        printf(" ");
+        random_node_research(t_verbe.root);
+        printf(" ");
+        random_node_research(t_verbe.root);
+        printf(" ");
+        random_node_research(t_nom.root);
+        printf(" ");
+        random_node_research(t_adj.root);
+    }
+    if (rep==3){
+        // ajouter fonction pour modèle 3
+        random_node_research(t_nom.root);
+        printf(" ");
+        random_node_research(t_verbe.root);
+        printf(" ");
+        random_node_research(t_nom.root);
+        printf(" ");
+        random_node_research(t_adv.root);
+        printf(" ");
+        random_node_research(t_verbe.root);
+    }
 
     printf("%d\n", recherche_mot(t_nom.root, "stabilimetre"));
-
+    
     printf("%d\n", recherche_mot(t_nom.root, "stabilisant"));
 
     printf("%d\n", recherche_mot(t_nom.root, "stabiliser"));
@@ -210,4 +245,3 @@ int main(int argc, char *argv[])
 
 
     return 0;
-}
