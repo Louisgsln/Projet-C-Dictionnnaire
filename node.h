@@ -43,5 +43,7 @@ p_children recherche_enfant(p_children, char);
 p_forms createForms(char *, char *);
 p_forms ajouterEnFinForms(p_forms , char *, char *);
 void affichermots_flechis(p_forms );
-
+void random_node_research(p_node);
+int children_number(LISTE L);
+int d_continue(void);
 #endif //UNTITLED_NODE_H
