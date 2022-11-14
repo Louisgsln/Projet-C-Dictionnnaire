@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     t_adv.root = createNode('/');
     t_adj.root = createNode('/');
 
-    printf("Bonjour ! \nQuel modèle de phrases souhaitez-vous générer ? ?\n");
+    printf("Bonjour ! \nQuel modèle de phrases souhaitez-vous générer ? \n");
     printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – ‘qui’ – verbe – verbe – nom – adjectif \n");
     int rep = 0;
     int i = 0;
