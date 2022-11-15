@@ -222,7 +222,6 @@ void random_node_research(p_node root){
     for (int i = 0; i < fate ; i++)
         child = child->next;
     current = child->pn;
-    fflush(stdin);
     printf("%c",current->value);
     if (children_number(root->children) > 0) {//has next characters
         if (root->forms == NULL || d_continue()) //does not have next characters or continue
