@@ -215,14 +215,15 @@ int children_number(LISTE L){
 
 void random_node_research(p_node root){
 
+    printf("\n");
     int fate = rand() % children_number(root->children);
     p_node current = root;
     p_children child = root->children;
-    for (int i = 0; i < fate - 1; i++)
+    for (int i = 0; i < fate ; i++)
         child = child->next;
     current = child->pn;
-
-    printf("%c", current->value);
+    fflush(stdin);
+    printf("%c",current->value);
     if (children_number(root->children) > 0) {//has next characters
         if (root->forms == NULL || d_continue()) //does not have next characters or continue
             random_node_research(current);
