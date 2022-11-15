@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
     t_adv.root = createNode('/');
     t_adj.root = createNode('/');
 
-
     fichier = fopen("dico_10_lignes.txt", "r");
 
     if (fichier != NULL) {
@@ -86,24 +85,23 @@ int main(int argc, char *argv[])
         }
         fclose(fichier);
     }
-    //fflush(stdin);
-    printf("\nBonjour ! \n\nQuel modèle de phrases souhaitez-vous générer ? ?\n");
+
+    printf("\nBonjour ! \n\nQuel modèle de phrases souhaitez-vous générer ? \n\n");
     printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – ‘qui’ – verbe – verbe – nom – adjectif \n3 - Modèle n°3 : nom - verbe - nom - adverbe - verbe \n");
     int rep;
-    printf("Saisissez le numéro correspondant : ");
-    //fflush(stdin);
+    printf("\nSaisissez le numéro correspondant : ");
     scanf("%d",&rep);
-    
+
     while(rep!=1 & rep!=2 & rep!=3){
-        printf("Le numéro saisit ne correspond à aucune des propositions.\n");
+        printf("Le numéro saisit ne correspond à aucune des propositions.\n\n");
         printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – ‘qui’ – verbe – verbe – nom – adjectif \n3 - Modèle n°3 : nom - verbe - nom - adverbe - verbe ");
-        printf("Saisissez le numéro correspondant : ");
+        printf("\n\nSaisissez le numéro correspondant : ");
         scanf("%d",&rep);
     }
 
+
     if (rep==1){
-        printf("%d",rep);
-        printf("eeeeeee");
+
         // ajouter fonction pour modèle 1
         random_node_research(t_nom.root);
         printf(" ");
@@ -113,7 +111,7 @@ int main(int argc, char *argv[])
         printf(" ");
         random_node_research(t_nom.root);
     }
-    printf("zzzzzz");
+
     if (rep==2){
         // ajouter fonction pour modèle 2
         random_node_research(t_nom.root);
@@ -142,7 +140,7 @@ int main(int argc, char *argv[])
     }
 
     printf("%d\n", recherche_mot(t_nom.root, "stabilimetre"));
-    
+
     printf("%d\n", recherche_mot(t_nom.root, "stabilisant"));
 
     printf("%d\n", recherche_mot(t_nom.root, "stabiliser"));
@@ -245,3 +243,4 @@ int main(int argc, char *argv[])
 
 
     return 0;
+}
