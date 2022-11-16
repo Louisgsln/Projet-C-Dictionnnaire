@@ -147,13 +147,16 @@ int main()
             random_node_research(t_nom.root);
         }
 
-        printf("\n\nAvez-vous termine ?\n");
+        printf("\n\nAvez-vous terminé?\n");
         printf("Saisir 1 pour oui ou 2 pour non : ");
+
         scanf("%d",&end);
-    }
+        while (end!=1 & end!=2){
+            printf("\nLa valeur saisie ne correspond pas.");
+            printf("\nSaisir 1 pour oui ou 2 pour non : ");
+            scanf("%d",&end);
+        }
+        
     printf("\nAu revoir !\n");
-
-
-
     return 0;
 }
