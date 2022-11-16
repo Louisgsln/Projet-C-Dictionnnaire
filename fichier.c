@@ -4,9 +4,9 @@
 #include "fichier.h"
 #define TAILLE_MAX 1000
 
+//mettre truc qui sort si faux
 
-
-int trouver_arbre(char * mots){
+int search_tree(char * mots){
     //printf("%s\n", mots);
     int pos3_mot=0;
     char type_mot[TAILLE_MAX];
