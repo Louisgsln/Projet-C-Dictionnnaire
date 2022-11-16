@@ -32,18 +32,16 @@ typedef struct s_forms{
 p_node createNode(char);
 int recherche_lettre_children(LISTE, char);
 p_children createChildren(p_node);
-LISTE ajouterEnFinChildren(LISTE, p_node);
-void afficherListe(LISTE );
-LISTE ajouter_mot_arbre(LISTE, char*, char*, char*);
-void afficher_enfants(LISTE );
-int recherche_lettre(p_children, char);
-void rentrer_mot_arbre_entier(p_node, char *, char*, char*);
-int recherche_mot(p_node,  char *);
-p_children recherche_enfant(p_children, char);
+LISTE add_end_Children(LISTE, p_node);
+void Display_List(LISTE );
+LISTE add_word_tree(LISTE, char*, char*, char*);
+void Display_children(LISTE );
+int research_letter(p_children, char);
+void enter_word_tree_entire(p_node, char *, char*, char*);
+int search_word(p_node,  char *);
+p_children research_children(p_children, char);
 p_forms createForms(char *, char *);
-p_forms ajouterEnFinForms(p_forms , char *, char *);
-void affichermots_flechis(p_forms );
-void random_node_research(p_node);
-int children_number(LISTE L);
-int d_continue(void);
+p_forms add_end_Forms(p_forms , char *, char *);
+void Display_word_associated(p_forms );
+
 #endif //UNTITLED_NODE_H
