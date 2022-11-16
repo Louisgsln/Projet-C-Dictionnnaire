@@ -17,7 +17,7 @@ p_node createNode(char val)
 }
 
 
-int recherche_lettre(p_children children, char c){
+int research_letter(p_children children, char c){
 
     //printf("- %c", children->pn->value);
     if (children == NULL){
@@ -27,11 +27,11 @@ int recherche_lettre(p_children children, char c){
         return 1;
     }
     else{
-        return recherche_lettre(children->next, c);
+        return research_letter(children->next, c);
     }
 }
 
-p_children recherche_enfant(p_children children, char c){
+p_children research_children(p_children children, char c){
 
     //printf("- %c", children->pn->value);
     if (children == NULL){
@@ -40,7 +40,7 @@ p_children recherche_enfant(p_children children, char c){
     if (c == children->pn->value){
         return children;
     }else{
-        return recherche_enfant(children->next, c);
+        return research_children(children->next, c);
     }
 }
 
@@ -65,7 +65,7 @@ p_forms createForms(char *infos, char *mot){
 
 
 
-LISTE ajouterEnFinChildren(LISTE L, p_node pn)
+LISTE add_end_Children(LISTE L, p_node pn)
 {
     LISTE nouvelElement = createChildren(pn);
 
@@ -89,7 +89,7 @@ LISTE ajouterEnFinChildren(LISTE L, p_node pn)
     }
 }
 
-p_forms ajouterEnFinForms(p_forms L, char *infos, char *mot)
+p_forms add_end_Forms(p_forms L, char *infos, char *mot)
 {
     p_forms nouvelElement = createForms(infos, mot);
 
@@ -109,7 +109,7 @@ p_forms ajouterEnFinForms(p_forms L, char *infos, char *mot)
     }
 }
 
-void afficherListe(LISTE L)
+void Display_List(LISTE L)
 {
     LISTE tmp = L;
     /* Tant que l'on n'est pas au bout de la liste */
@@ -122,7 +122,7 @@ void afficherListe(LISTE L)
     }
 }
 
-void affichermots_flechis(p_forms F)
+void Display_word_associated(p_forms F)
 {
     p_forms tmp = F;
     /* Tant que l'on n'est pas au bout de la liste */
@@ -135,7 +135,7 @@ void affichermots_flechis(p_forms F)
     }
 }
 
-LISTE ajouter_mot_arbre(LISTE L, char *mot, char *infos, char *mots_flechis){
+LISTE add_word_tree(LISTE L, char *mot, char *infos, char *mots_flechis){
     //printf("%s:%u - L: 0x%lx\n", __FILE__, __LINE__, L);
     if (mot[0] == '\0'){
         return NULL;
@@ -143,19 +143,19 @@ LISTE ajouter_mot_arbre(LISTE L, char *mot, char *infos, char *mots_flechis){
     else{
 
         p_node pn = createNode(mot[0]);
-        L = ajouterEnFinChildren(L, pn);
+        L = add_end_Children(L, pn);
         //afficherListe(L);
-        pn -> children = ajouter_mot_arbre(pn->children,mot+1, infos, mots_flechis);
+        pn -> children = add_word_tree(pn->children,mot+1, infos, mots_flechis);
         if (pn -> children == NULL){
-            pn->forms = ajouterEnFinForms(pn->forms, infos, mots_flechis);
-            affichermots_flechis(pn->forms);
+            pn->forms = add_end_Forms(pn->forms, infos, mots_flechis);
+            Display_word_associated(pn->forms);
         }
     }
     return L;
 }
 
 
-void afficher_enfants(LISTE L){
+void Display_children(LISTE L){
     if (L == NULL){
         return;
     }
@@ -163,79 +163,40 @@ void afficher_enfants(LISTE L){
         p_children tmp;
         tmp = L;
 
-        afficherListe(L);
+        Display_List(L);
         while (tmp != NULL) {
-            afficher_enfants(tmp->pn->children);
+            Display_children(tmp->pn->children);
             tmp = tmp->next;
         }
     }
 }
 
-void rentrer_mot_arbre_entier(p_node pn,  char *mot, char *infos, char *mots_flechis){
+void enter_word_tree_entire(p_node pn,  char *mot, char *infos, char *mots_flechis){
     //printf("%s:%u - mot %s\n", __FILE__,__LINE__, mot);
-    if (recherche_lettre(pn->children, mot[0])){
+    if (research_letter(pn->children, mot[0])){
         //printf("%s:%u", __FILE__,__LINE__);
-        rentrer_mot_arbre_entier(pn->children->pn, mot+1, infos, mots_flechis);
+        enter_word_tree_entire(pn->children->pn, mot+1, infos, mots_flechis);
     }
     else{
-        pn->children = ajouter_mot_arbre(pn->children, mot , infos, mots_flechis);
+        pn->children = add_word_tree(pn->children, mot , infos, mots_flechis);
         if (pn->children == NULL){
-            pn->forms = ajouterEnFinForms(pn->forms, infos, mots_flechis);
-            affichermots_flechis(pn->forms);
+            pn->forms = add_end_Forms(pn->forms, infos, mots_flechis);
+            Display_word_associated(pn->forms);
         }
     }
 }
 
-int recherche_mot(p_node pn,  char *mot){
+int search_word(p_node pn,  char *mot){
     if (mot[0] == '\0'){
         return 1;
     }
     //printf("%s:%u - mot %s\n", __FILE__,__LINE__, mot);
-    p_children enfant = recherche_enfant(pn->children, mot[0]);
+    p_children enfant = research_children(pn->children, mot[0]);
     if (enfant != NULL){
         //printf("%s:%u", __FILE__,__LINE__);
-        return recherche_mot(enfant->pn, mot+1);
+        return search_word(enfant->pn, mot+1);
     }
     else{
         return 0;
     }
 }
-
-int children_number(LISTE L){
-    LISTE tmp = L;
-    int cpt=0;
-/* Tant que l'on n'est pas au bout de la liste */
-    while(tmp != NULL)
-    {
-        cpt++;
-/* On avance d'une case */
-        tmp = tmp->next;
-    }return cpt;
-}
-
-void random_node_research(p_node root){
-
-    printf("\n");
-    int fate = rand() % children_number(root->children);
-    p_node current = root;
-    p_children child = root->children;
-    for (int i = 0; i < fate ; i++)
-        child = child->next;
-    current = child->pn;
-    printf("%c",current->value);
-    if (children_number(root->children) > 0) {//has next characters
-        if (root->forms == NULL || d_continue()) //does not have next characters or continue
-            random_node_research(current);
-    }
-}
-
-//évite de choisir toujours le premier mot
-int d_continue(void){
-    int fate_choice;
-    if (rand()% 2 == 0)
-        fate_choice = 0;
-    else
-        fate_choice = 1;
-    return fate_choice;
-}
-
