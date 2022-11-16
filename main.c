@@ -1,12 +1,14 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "node.h"
 #include "bintree.h"
 #include "fichier.h"
+#include <time.h>
+#include <stdlib.h>
 
-#define TAILLE_MAX 1000 // Tableau de taille 1000
+
+#define TAILLE_MAX 100 // Tableau de taille 1000
 
 void fill_in_words_cut(char mots_coupes[3][TAILLE_MAX], char *chaine)
 {
@@ -31,8 +33,11 @@ void fill_in_words_cut(char mots_coupes[3][TAILLE_MAX], char *chaine)
     }
 }
 
-int main(int argc, char *argv[])
+
+int main()
 {
+    srand( time( NULL) );
+
     FILE* fichier = NULL;
     char chaine[TAILLE_MAX] = ""; // Chaîne vide de taille TAILLE_MAX
     t_tree t_nom, t_verbe, t_adj, t_adv;
@@ -41,13 +46,13 @@ int main(int argc, char *argv[])
     t_adv.root = createNode('/');
     t_adj.root = createNode('/');
 
-    fichier = fopen("dico_10_lignes.txt", "r");
+    fichier = fopen("dictionnaire_non_accentue.txt", "r");
 
     if (fichier != NULL) {
         //fgets(chaine, TAILLE_MAX, fichier); // On lit maximum TAILLE_MAX caractères du fichier, on stocke le tout dans "chaine"
         //printf("%s", chaine); // On affiche la chaîne
         while (fgets(chaine, TAILLE_MAX, fichier) != NULL) {
-            printf("\n%s ", chaine); // On affiche la chaîne
+            //printf("\n%s ", chaine); // On affiche la chaîne
             //couper la  ligne
             char mots_coupes[3][TAILLE_MAX];
 
@@ -58,57 +63,55 @@ int main(int argc, char *argv[])
 
             if (res ==1){
                 enter_word_tree_entire(t_nom.root, mots_coupes[1],mots_coupes[2], mots_coupes[0]);
-                printf("mot ajoute dans l'arbre : ");
-                Display_children(t_nom.root->children);
-                printf("\n");
+                //printf("mot ajoute dans l'arbre : ");
+                //Display_children(t_nom.root->children);
+                //printf("\n");
             }
             if (res == 2){
                 enter_word_tree_entire(t_verbe.root, mots_coupes[1],mots_coupes[2], mots_coupes[0]);
-                printf("mot ajoute dans l'arbre : ");
-                Display_children(t_verbe.root->children);
-                printf("\n");
+                //printf("mot ajoute dans l'arbre : ");
+                //Display_children(t_verbe.root->children);
+                //printf("\n");
             }
             if (res == 3){
                 enter_word_tree_entire(t_adj.root, mots_coupes[1],mots_coupes[2], mots_coupes[0]);
-                printf("mot ajoute dans l'arbre : ");
-                Display_children(t_adj.root->children);
-                printf("\n");
+                //printf("mot ajoute dans l'arbre : ");
+                //Display_children(t_adj.root->children);
+                //printf("\n");
             }
             if (res == 4){
                 enter_word_tree_entire(t_adv.root, mots_coupes[1],mots_coupes[2], mots_coupes[0]);
-                Display_children(t_adv.root->children);
-                printf("mot ajoute dans l'arbre : ");
-                printf("\n");
+                //Display_children(t_adv.root->children);
+                //printf("mot ajoute dans l'arbre : ");
+                //printf("\n");
             }
         }
         fclose(fichier);
     }
 
-    printf("%d\n", search_word(t_nom.root, "stabilimetre"));
+    //printf("%d\n", search_word(t_nom.root, "stabilimetre"));
 
-    printf("%d\n", search_word(t_nom.root, "stabilisant"));
 
-    printf("%d\n", search_word(t_nom.root, "stabiliser"));
-    
-    printf("\nBonjour ! \n");
-    int end = 0;
-    while (end!=1){
-        printf("\nQuel modèle de phrases souhaitez-vous générer ? \n\n");
-        printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – 'qui' – verbe – verbe – nom – adjectif \n3 - Modèle n°3 : nom - verbe - adjectif - 'avec' - nom \n");
+
+    int end;
+
+    while (end!=1) {
+        printf("\nQuel modele de phrases souhaitez vous generer ? \n\n");
+        printf("1. Modele n1 : nom_adjectif_verbe_nom\n2. Modele n2 : nom_'qui'_verbe_verbe_nom_adjectif \n3. Modele n3 : nom_verbe_adjectif_'avec'_nom \n");
         int rep;
-        printf("\nSaisissez le numéro correspondant : ");
+        printf("\nSaisissez le numero correspondant : ");
         fflush(stdin);
-        scanf("%d",&rep);
+        scanf("%d", &rep);
 
-        while(rep!=1 & rep!=2 & rep!=3){
-            printf("Le numéro saisit ne correspond à aucune des propositions.\n\n");
-            printf("1 - Modèle n°1 : nom – adjectif – verbe – nom\n2 - Modèle n°2 : nom – 'qui' – verbe – verbe – nom – adjectif \n3 - Modèle n°3 : nom - verbe - adjectif - 'avec' - nom ");
-            printf("\n\nSaisissez le numéro correspondant : ");
-            scanf("%d",&rep);
+        while (rep != 1 & rep != 2 & rep != 3) {
+            printf("Le numero saisit ne correspond a aucune des propositions.\n\n");
+            printf("1. Modele n1 : nom_adjectif_verbe_nom\n2. Modele n2 : nom_'qui'_verbe_verbe_nom_adjectif \n3. Modele n3 : nom_verbe_adjectif_'avec'_nom \n");
+            printf("\n\nSaisissez le numero correspondant : ");
+            scanf("%d", &rep);
         }
         printf("\n");
 
-        if (rep==1){
+        if (rep == 1) {
 
             // ajouter fonction pour modèle 1
 
@@ -121,7 +124,7 @@ int main(int argc, char *argv[])
             random_node_research(t_nom.root);
         }
 
-        if (rep==2){
+        if (rep == 2) {
             // ajouter fonction pour modèle 2
             random_node_research(t_nom.root);
             printf(" qui ");
@@ -133,7 +136,7 @@ int main(int argc, char *argv[])
             printf(" ");
             random_node_research(t_adj.root);
         }
-        if (rep==3){
+        if (rep == 3) {
             // ajouter fonction pour modèle 3
             random_node_research(t_nom.root);
             printf(" ");
@@ -144,10 +147,13 @@ int main(int argc, char *argv[])
             random_node_research(t_nom.root);
         }
 
-        printf("\n\nAvez-vous terminé?\n");
+        printf("\n\nAvez-vous termine ?\n");
         printf("Saisir 1 pour oui ou 2 pour non : ");
         scanf("%d",&end);
     }
     printf("\nAu revoir !\n");
+
+
+
     return 0;
 }
