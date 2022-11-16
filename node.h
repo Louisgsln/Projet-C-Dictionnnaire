@@ -43,5 +43,8 @@ p_children research_children(p_children, char);
 p_forms createForms(char *, char *);
 p_forms add_end_Forms(p_forms , char *, char *);
 void Display_word_associated(p_forms );
+void random_node_research(p_node);
+int children_number(LISTE L);
+int choice_word();
 
 #endif //UNTITLED_NODE_H
