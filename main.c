@@ -146,9 +146,8 @@ int main(int argc, char *argv[])
 
         printf("\n\nAvez-vous terminé?\n");
         printf("Saisir 1 pour oui ou 2 pour non : ");
-        fflush(stdin);
-        scanf("%d",end);
-        printf("%d",end);
+        scanf("%d",&end);
     }
+    printf("\nAu revoir !\n");
     return 0;
 }
